@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import { ReduxProvider } from '@/Provider'
+import Sidebar from '@/components/Sidebar'
 
 
 
@@ -26,7 +27,10 @@ export default function RootLayout({
       <body >
         <ReduxProvider>
             <Navbar/>
+            <div className="flex items-start ">
+            <Sidebar/>
             {children}
+            </div>
         </ReduxProvider>
         </body>
     </html>

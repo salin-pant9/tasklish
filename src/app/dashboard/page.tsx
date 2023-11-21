@@ -4,7 +4,7 @@ type Props = {}
 
 const dashboard = (props: Props) => {
   return (
-    <div className="p-6">page</div>
+    <div className="p-6 ">page</div>
   )
 }
 

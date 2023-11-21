@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/userSlice"
+import tokenReducer from "./slices/tokenSlice"
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 export function makeStore() {
     return configureStore({
         reducer: {
-             userReducer
+             userReducer,
+             token:tokenReducer
         }
     })
 }

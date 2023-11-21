@@ -17,11 +17,13 @@ const Signup =  () => {
     const dispatch = useDispatch<AppDispatch>()
     const router = useRouter()
     
+    
     const register = async (e:React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       const data = await userRegsitration({first_name,last_name,email,password,username});
+    
       dispatch( increment({username,first_name,last_name}))
-      router.push('/login');
+      router.push('/create_board');
 
     }
 
