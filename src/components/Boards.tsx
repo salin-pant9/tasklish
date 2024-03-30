@@ -1,16 +1,20 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+type Props = {
+  name: string;
+  description: string;
+};
 
-const Boards = (props: Props) => {
+const Boards = ({ name, description }: Props) => {
   return (
     <div>
-        <section className=" p-5 border-4 border-lightGreen  text-lightGray rounded-xl flex bg-lightGreen  flex-col items-center shadow-xl">
-            <h2 className='text-[1.5rem]  font-extrabold'>NO. of tasks created</h2>
-            <p className='font-extrabold text-2xl'>52</p>
-        </section>
+      <section className=" p-2 border-2 border-lightGreen h-[15rem] w-[15rem]  rounded-xl flex   flex-col  shadow-xl">
+        <h2 className="text-[1.2rem]  font-semibold">{name}</h2>
+        <p className="">Author: &quot;Author name&quot;</p>
+        <h5 className="mt-3 italic text-[#B4B4B8] ">{description}</h5>
+      </section>
     </div>
-  )
-}
+  );
+};
 
-export default Boards
+export default Boards;

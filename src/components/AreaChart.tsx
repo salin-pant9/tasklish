@@ -34,7 +34,7 @@ const AreaChart = (props: Props) => {
     }
 
   return (
-    <div className="h-[20rem] w-full">
+    <div className="h-[20rem] w-[100%]">
         <Line options={options}  data={data} />
     </div>
   )
