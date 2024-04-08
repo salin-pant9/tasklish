@@ -7,6 +7,7 @@ import { redirect, useRouter,  } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { toast } from "sonner";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -14,16 +15,20 @@ const Login = () => {
   const router = useRouter();
   const handleClick = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(username === "" && password === ""){
+      toast("Please fill out all fields");
+      return;
+    }
     const data = await userlogin({ username, password });
 
     if(data){
 
-      router.push("/dashboard");
+      router.push("/create_board");
     }
   };
   const token = useSelector((state: RootState) => state.token.token);
   if (token) {
-    redirect("/dashboard");
+    redirect("/create_board");
   }
   return (
     <div className="flex flex-col items-center w-full ">
@@ -56,7 +61,7 @@ const Login = () => {
               />
             </div>
             {/* button */}
-            <button className="flex hover:bg-secondary    items-center justify-center  border-solid p-2 rounded-xl  flex items-center justify-center text-center w-[13rem] bg-[#000000] text-[#ffffff] font-bold border-2 border-black ">
+            <button className=" hover:bg-secondary  border-solid p-2 rounded-xl  flex items-center justify-center text-center w-[13rem] bg-[#000000] text-[#ffffff] font-bold border-2 border-black ">
               Login
             </button>
             {/* link to signup  */}

@@ -1,13 +1,15 @@
 
+
 import { AxiosError } from "axios";
 import instance from "./axios_instance";
 import { toast } from "sonner";
 
-export const createCard = async ({
+export const update_Card = async ({
   title,
   description,
   token,
   id,
+  board_id,
   status,
   start_date,
   due_date,
@@ -15,16 +17,17 @@ export const createCard = async ({
   title: string;
   description: string;
   token: string;
-  id:string;
+  id:number;
+  board_id: number;
   status: string;
   start_date:string;
   due_date: string;
 
 }) => {
   try{
-
-    const response = await instance.post(
-      `/boards/card/create/${id}`,
+    console.log(id);
+    const response = await instance.put(
+      `/boards/card/update/${board_id}/${id}`,
       {
         title,
         description,
@@ -38,11 +41,11 @@ export const createCard = async ({
         },
       },
     );
-    toast("Event created Successfully")
+    toast("Event updated Successfully")
     return response?.data;
   }
   catch(error: any){
-    toast("Please fill all fields");
+    toast("Something went wrong");
     return error.message
   }
 };

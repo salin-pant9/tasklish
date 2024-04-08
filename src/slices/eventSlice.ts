@@ -23,12 +23,7 @@ const eventSlice = createSlice({
   initialState,
   reducers: {
     AddEvents: (state, action: PayloadAction<eventState>) => {
-    const exist = state.items.find((item) => (
-      item.id === action.payload.id
-    ))
-    if (!exist) {
-      state.items.push(action.payload);
-    }
+    state.items.push(action.payload)
     },
   },
 });

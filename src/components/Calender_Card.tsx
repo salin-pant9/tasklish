@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EventModal from "./EventModal";
 import { useAppSelector } from "@/store";
 import { format } from "date-fns";
@@ -7,6 +7,7 @@ import { CirclePlus, Ellipsis, PlusIcon } from "lucide-react";
 import { Popover, PopoverTrigger } from "@/components/ui/popover";
 import { PopoverContent } from "@radix-ui/react-popover";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import CustomPopOver from "./CustomPopOver";
 
 type Props = {
   days: string[];
@@ -21,11 +22,25 @@ type Props = {
 };
 
 const Calender_Card = ({ days, state, range, array, times }: Props) => {
+
+  const params = useParams()
+  const [data, setData] = useState<any>([]);
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    const fetchdata = async () => {
+      const response = await fetch(`http://localhost:8000/boards/cards/${params.board_id}`, {
+        headers:{
+          Authorization: `Token ${token}`
+        }
+      }).then(res => res.json());
+      setData(response);
+    }
+     fetchdata();
+  },[]);
   const [toggle, setToggle] = useState(false);
   const [startTime, setstartTime] = useState<number>(times[0] - 1);
   const [eventFinishtime, setEventFinishTime] = useState<number>(startTime + 1);
   const event = useAppSelector((state) => state.event);
-  const params = useParams()
   let individualDate = format(state.startDate, "yyyy-MM-dd");
   const specificDate = +individualDate.slice(-2) + array;
   //  individualDate = format(
@@ -36,7 +51,6 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
     new Date(individualDate.slice(0, -2) + specificDate),
     "yyyy-MM-dd",
   );
-  console.log(event.items);
   function handleClick(time: number) {
     // setToggle(true);
     setstartTime(time);
@@ -51,13 +65,14 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
           <p className="font-bold text-[30px] text-[#FFAF45]">
             {specificDate}{" "}
           </p>
-
           <p className="font-bold  ">
             {days[(state.startDate.getDay() + array) % 7]}
           </p>
         </section>
         <section>
           <EventModal
+            setData={setData}
+            data={data}
             toggle={toggle}
             setToggle={setToggle}
             eventStarttime={startTime}
@@ -83,23 +98,23 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
                 {/* {event.items.map((item) => (
                   <h2>{item.title}</h2>
                 ))} */}
-                {event.items
+                {data
                   .filter(
                     (item) =>
-                      item.eventStartDate === individualDate &&
+                     format(new Date(item.start_date),'yyyy-MM-dd') === individualDate &&
                       item.board === parseInt(params.board_id as string) &&
-                      item.eventStarttime === time
+                      new Date(item.start_date).getHours() === time
                   )
                   .map((e, index) => (
                     <div
                       key={index}
-                      className="group bg-[#58A399] z-10 h-[3rem] text-[#ffffff] w-full rounded-xl px-2 flex items-center justify-between  gap-y-1 "
+                      className="group bg-[#58A399]  h-[3rem] text-[#ffffff] w-full rounded-xl px-2 flex items-center justify-between  gap-y-1 "
                     >
                       <p>{e.title}</p>
-                      <TooltipProvider>
+                      {/* <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <Ellipsis className=" h-6 w-6" />
+                            <Ellipsis className=" h-6 w-6 cursor-pointer" />
                           </TooltipTrigger>
                           <TooltipContent className="bg-white w-52 z-50">
                             <div className="flex flex-col gap-y-5 p-3">
@@ -118,10 +133,12 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
                             </div>
                           </TooltipContent>
                         </Tooltip>
-                      </TooltipProvider>
+                      </TooltipProvider> */}
+                      <CustomPopOver item={e} setData={setData} data={data}/>
                     </div>
                   ))}
                 {/* <p>{time}</p> */}
+
               </section>
             </>
           ))
@@ -130,14 +147,39 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
             className={`overflow-y-scroll scrollbar-hide   h-[20rem] border-b-2 border-lightGray `}
             // onClick={(e) => setToggle(true)}
           >
-            {event.items
-              .filter((item) => item.eventStartDate === individualDate)
+            {data
+              .filter((item) => format(new Date(item.start_date),"yyyy-MM-dd") === individualDate)
               .map((e, index) => (
                 <p
                   key={index}
-                  className="bg-[#58A399] text-[#ffffff] min-w-1/5 rounded-xl px-2 mt-2 "
+                  className="bg-[#58A399] flex space-between w-full text-[#ffffff]  rounded-xl px-2 mt-2 "
                 >
-                  {e.title} ({e.eventStarttime}:00 - {e.eventFinishtime}:00 )
+                  {e.title} ({new Date(e.start_date).getHours()}:00 - {e.eventFinishtime}:00 )
+
+                      {/* <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Ellipsis className=" h-6 w-6 cursor-pointer" />
+                          </TooltipTrigger>
+                          <TooltipContent className="bg-white w-52 z-50">
+                            <div className="flex flex-col gap-y-5 p-3">
+                              <p
+                                onClick={() => {
+                                  alert("clicked");
+                                  setToggle(false);
+                                }}
+                                className="text-black hover:bg-muted"
+                              >
+                                Update
+                              </p>
+                              <p className="text-destructive hover:bg-muted">
+                                Delete
+                              </p>
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider> */}
+                      <CustomPopOver data={e}/>
                 </p>
               ))}
           </section>

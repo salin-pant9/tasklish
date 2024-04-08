@@ -7,6 +7,7 @@ import useLocalStorage from "@xmanscript/uselocalstorage";
 import { redirect, useRouter } from "next//navigation";
 import React, { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useDispatch } from "react-redux";
+import { Input } from "./ui/input";
 
 type Props = {
   toggle: boolean;
@@ -42,7 +43,7 @@ const Modal = ({ toggle, setToggle }: Props) => {
       >
         <div className="space-y-3">
           <h1 className="font-bold text-lg">Name:</h1>
-          <input
+          <Input
             value={name}
             required
             onChange={(e) => setName(e.target.value)}
@@ -52,7 +53,7 @@ const Modal = ({ toggle, setToggle }: Props) => {
         </div>
         <div className="space-y-3">
           <h1 className="font-bold text-lg">Description:</h1>
-          <input
+          <Input
             value={description}
             required
             onChange={(e) => setDescription(e.target.value)}

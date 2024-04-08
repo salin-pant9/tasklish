@@ -19,10 +19,14 @@ type Props = {
   range: number;
   eventFinishtime: number;
   setEventFinishTime: React.Dispatch<React.SetStateAction<number>>;
+  setData:React.Dispatch<any>,
+  data:any
 };
 
 const EventModal = ({
   toggle,
+  data,
+  setData,
   setToggle,
   eventStarttime,
   eventFinishtime,
@@ -64,7 +68,8 @@ const EventModal = ({
     let getDueDate = new Date(eventFinishDate);
      getStartDate.setHours(eventStarttime,0,0); 
      getDueDate.setHours(eventFinishtime,0,0);
-    const data = await createCard({title, description, token, id:params.board_id as string, status, start_date:getStartDate.toISOString(), due_date:getDueDate.toISOString()});
+    const returnData = await createCard({title, description, token, id:params.board_id as string, status, start_date:getStartDate.toISOString(), due_date:getDueDate.toISOString()});
+    setData([...data,returnData]);
     const dateRange = Math.abs(
       +eventFinishDate.slice(-2) - +eventStartDate.slice(-2),
     );
@@ -84,6 +89,7 @@ const EventModal = ({
       //     eventStartDate: eventStartDate1,
       //     eventFinishDate: eventStartDate1,
       //     id: data.id,
+      //     board: data.board,
       //   }),
       // );
     }
@@ -231,12 +237,12 @@ const EventModal = ({
                   </section>
                 </section>
                 <DialogFooter className="">
-                  {/* <DialogClose asChild> */}
+                  <DialogClose >
 
-                  <button className="bg-primary text-[#ffffff] rounded-xl p-3 w-1/6">
+                  <button className="bg-primary text-[#ffffff] rounded-xl p-3 w-full">
                     Save
                   </button>
-                  {/* </DialogClose> */}
+                  </DialogClose>
                 </DialogFooter>
               </form>
             </div>

@@ -5,7 +5,7 @@ import {Chart as ChartJS} from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto'
 type Props = {}
 
-const PieChart = (props: Props) => {
+const PieChart = ({events}: any) => {
     ChartJS.register(CategoryScale)
 
     
@@ -18,15 +18,24 @@ const PieChart = (props: Props) => {
            
         },
     };
-    const labels = ['January','February','March','April','May','June','July'];
-
+    const labels = ['January', 'February','March','April','May', 'June','July','August','September','October','November','December'];
+    const datamonth = [0,0,0,0,0,0,0,0,0,0,0,0]
+    if(events){
+        for(let i=0; i < labels.length; i++){
+            for(let j =0; j < events.length; j++){
+                if(labels[i] === new Date(events[j].start_date).toLocaleString('en-US',{month:'long'}) && events[j].status === "TODO"){
+                    datamonth[i]++
+                }
+            }
+        }
+    }
     const data = {
         labels,
         datasets: [
             {
                 fill:true,
                 label: 'Dataset 2',
-                data: labels.map(() => Math.random()),
+                data: datamonth,
                 borderColor: [ 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',

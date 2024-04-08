@@ -5,7 +5,7 @@ import {Chart as ChartJS} from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto'
 type Props = {}
 
-const BarChart = (props: Props) => {
+const BarChart = ({events}:any) => {
     ChartJS.register(CategoryScale)
 
     
@@ -18,15 +18,24 @@ const BarChart = (props: Props) => {
            
         },
     };
-    const labels = ['January','February','March','April','May','June','July'];
-
+    const labels = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const dataday = [0,0,0,0,0,0,0];
+    if(events){
+        for(let i=0; i < labels.length; i++){
+            for(let j =0; j < events.length; j++){
+                if(labels[i] === new Date(events[j].start_date).toLocaleString('en-US',{weekday:'long'})){
+                    dataday[i]++
+                }
+            }
+        }
+    }
     const data = {
         labels,
         datasets: [
             {
                 fill:true,
                 label: 'Dataset 2',
-                data: labels.map(() => Math.random()),
+                data: dataday,
                 borderColor: 'lightGreen',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
             }
@@ -34,7 +43,7 @@ const BarChart = (props: Props) => {
     }
 
   return (
-    <div className="h-[20rem] w-full">
+    <div className="h-[15rem] w-full">
         <Bar options={options}   data={data} />
     </div>
   )

@@ -16,22 +16,23 @@ const Sidebar = (props: Props) => {
         {/* list of options  */}
 
         <ul className="  mb-10 flex flex-col justify-start mt-5 gap-y-10  text-lg ">
-          <Link href="/dashboard">
+          {/* <Link href="/dashboard">
             <li className="">Dashboard</li>
-          </Link>
+          </Link> */}
           <Link href="/create_board">
             <li>Calender</li>
           </Link>
-          <li>Settings</li>
+          {/* <li>Settings</li> */}
         </ul>
         <ul className="flex flex-col p-1 justify-start gap-y-5">
           <h3 className="text-lg font-bold">Boards</h3>
           {
             boards.items.map(board => (
-
+          <Link href={`/create_board/${board.id}`}>
           <li key={board.id} className="hover:bg-lightGreen hover:font-semibold hover:text-lightGray p-1 rounded-xl">
             {board.name}
           </li>
+          </Link>
             ))
           }
 

@@ -12,6 +12,7 @@ import { useParams } from "next/navigation";
 import { fetchCard } from "@/lib/fetch_cards";
 import { AddEvents } from "@/slices/eventSlice";
 import {format} from 'date-fns'
+import Link from "next/link";
 
 type Props = {};
 
@@ -44,27 +45,27 @@ const Board_Name = ({}) => {
   function handleChange(ranges: any) {
     setState(ranges.selection);
   }
-  useEffect(() => {
-    fetchCard(token as string , params.board_id as string ).then(data => {
+  // useEffect(() => {
+  //   fetchCard(token as string , params.board_id as string ).then(data => {
       
-      data.map((item: any) => {
-        dispatch(AddEvents({
-            title: item.title,
-            description: item.description,
-            eventStartDate: format(new Date(item.start_date),'yyyy-MM-dd'),
-            eventFinishDate: format(new Date(item.due_date), 'yyyy-MM-dd'),
-            eventStarttime: new Date(item.start_date).getHours(),
-            eventFinishtime: new Date(item.due_date).getHours(),
-            status: item.status,
-            id: item.id,
-            board: item.board,
-        }))
-        console.log(item.start_date);
-    })
-    })
+  //     data.map((item: any) => {
+  //       dispatch(AddEvents({
+  //           title: item.title,
+  //           description: item.description,
+  //           eventStartDate: format(new Date(item.start_date),'yyyy-MM-dd'),
+  //           eventFinishDate: format(new Date(item.due_date), 'yyyy-MM-dd'),
+  //           eventStarttime: new Date(item.start_date).getHours(),
+  //           eventFinishtime: new Date(item.due_date).getHours(),
+  //           status: item.status,
+  //           id: item.id,
+  //           board: item.board,
+  //       }))
+  //       console.log(item.start_date);
+  //   })
+  //   })
    
   
-  },[token, params.board_id])
+  // },[token, params.board_id])
   return (
     <div className="flex flex-col w-full">
     <div className='w-full p-3 mt-2 bg-lightGray'>
@@ -78,10 +79,16 @@ const Board_Name = ({}) => {
       }
     </div>
     <div className="p-5 w-full">
+      <div className='flex w-full justify-between'>
+
       <CalendarDaysIcon
         className="w-8 h-8 cursor-pointer"
         onClick={() => setCalender(!calender)}
       />
+      <Link href={`/create_board/${params.board_id}/dashboard`}>
+      <button className="p-2 bg-black rounded-xl text-white font-bold ">Dashboard</button>
+      </Link>
+      </div>
       {calender ? (
         <div>
           <DateRangePicker
@@ -126,7 +133,4 @@ const Board_Name = ({}) => {
 };
 
 export default Board_Name;
-function fetch_cards() {
-  throw new Error("Function not implemented.");
-}
 

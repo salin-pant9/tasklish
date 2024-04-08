@@ -11,8 +11,7 @@ import { useDispatch } from 'react-redux';
 import { addToken } from '@/slices/tokenSlice';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { redirect } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { redirect, useRouter } from 'next/navigation';
 import { logout } from '@/lib/logout';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Label } from './ui/label';
@@ -22,7 +21,9 @@ import { Input } from './ui/input';
 
 
 function Navbar() {
-  const user = useAppSelector((state) => state.user)
+  const router = useRouter();
+  const data = localStorage.getItem("user");
+  const user = JSON.parse(data as string);
   const dispatch = useDispatch<AppDispatch>()
   const token = localStorage.getItem('token');
   useEffect(() => {
@@ -33,7 +34,7 @@ function Navbar() {
 
     const Logout =  () => {
       logout();
-    redirect('/login');
+      router.refresh();
     }
 
 

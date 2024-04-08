@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import crypto from 'crypto'
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import Modal from "@/components/Modal";
 import { DateRangePicker, Range } from "react-date-range";
@@ -14,18 +15,29 @@ import { RootState } from "@/store";
 import { fetchBoard } from "@/lib/fetchBoard";
 import { AddBoards } from "@/slices/boardSlice";
 import { redirect } from "next/navigation";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import axios from "axios";
+import submitEsewaform from "@/lib/submitEsewaform";
 
 type Props = {};
 
 function Create_board(props: Props) {
   const token = useSelector((state: RootState) => state.token.token);
   const boards = useSelector((state: RootState) => state.board);
+  const payment = useSelector((state:RootState) => state.payment);
   const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(5);
   const dispatch = useDispatch();
   const handleClick = () => {
     setToggle(!toggle);
   };
+  const handleEsewa = async () => {
+    const url = await submitEsewaform("https://a.khalti.com/api/v2/epayment/initiate/");
+    window.location.href = url;
+  }
+
+
   const getBoards = async (token: string) => {
     try {
       const response = await instance.get(`/boards/`, {
@@ -34,6 +46,7 @@ function Create_board(props: Props) {
         },
       });
       if (response) {
+        // setCount(() => response.data.length);
         response.data.map((item: { name: any; description: any; id: any; }) => {
           dispatch(
             AddBoards({
@@ -56,6 +69,7 @@ function Create_board(props: Props) {
     }
     setLoading(true);
     if (token) {
+      console.log(payment.status);
       getBoards(token);
     }
     console.log(boards)
@@ -67,14 +81,43 @@ function Create_board(props: Props) {
       <section className="  p-5 flex items-center justify-between w-full">
         {/* left part */}
         <section>{token}</section>
+        <section>Count = {count}</section>
         {/* right part */}
+        {count !== 5 || payment.status === 'Completed' ? (
         <button
           className="rounded-xl border-2 border-solid bg-[#000000] text-[#ffffff] p-3 transition ease-in  "
           onClick={handleClick}
         >
           {" "}
           Create Board
+       </button>
+ //
+        ): (
+
+          <Dialog>
+            <DialogTrigger asChild>
+
+        <button
+          className="rounded-xl border-2 border-solid bg-[#000000] text-[#ffffff] p-3 transition ease-in  "
+        >
+          {" "}
+          Create Board
         </button>
+            </DialogTrigger>
+            <DialogContent className='sm:max-w-[500px] '>
+              <DialogHeader>
+                <DialogTitle>Subscription Needed</DialogTitle>
+                <DialogDescription>Your Board Creation limit has been exceeded. Please "click" continue to Subscribe.<br/>Note: The price is Rs.500.
+
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <button className="w-full border-b border-black rounded-xl">Cancel</button>
+                <button onClick={handleEsewa} className='w-full bg-blue-600 rounded-xl text-white font-bold'>Continue</button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        )}
       </section>
       {/* calender section */}
 
