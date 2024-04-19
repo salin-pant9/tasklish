@@ -50,7 +50,7 @@ function Navbar() {
         <>
 
           <div className='flex items-center space-x-6'>
-            <BellIcon className="h-8 w-8" />
+            {/* <BellIcon className="h-8 w-8" /> */}
            <Popover>
             <PopoverTrigger asChild>
 

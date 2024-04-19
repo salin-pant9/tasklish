@@ -108,7 +108,8 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
                   .map((e, index) => (
                     <div
                       key={index}
-                      className="group bg-[#58A399]  h-[3rem] text-[#ffffff] w-full rounded-xl px-2 flex items-center justify-between  gap-y-1 "
+
+                      className={`group ${e.status === "Completed" ? "bg-[#58A399]" : "bg-red-500"}   h-[3rem] text-[#ffffff] w-full rounded-xl px-2 flex items-center justify-between  gap-y-1 `}
                     >
                       <p>{e.title}</p>
                       {/* <TooltipProvider>
@@ -152,9 +153,9 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
               .map((e, index) => (
                 <p
                   key={index}
-                  className="bg-[#58A399] flex space-between w-full text-[#ffffff]  rounded-xl px-2 mt-2 "
+                  className={`${e.status === "Completed" ? "bg-[#58A399]" : 'bg-red-400'} flex space-between w-full text-[#ffffff]  rounded-xl px-2 mt-2 `}
                 >
-                  {e.title} ({new Date(e.start_date).getHours()}:00 - {e.eventFinishtime}:00 )
+                  {e.title} ({new Date(e.start_date).getHours()}:00 - {new Date(e.due_date).getHours()}:00 )
 
                       {/* <TooltipProvider>
                         <Tooltip>
@@ -179,7 +180,8 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider> */}
-                      <CustomPopOver data={e}/>
+
+                      <CustomPopOver item={e} setData={setData} data={data}/>
                 </p>
               ))}
           </section>

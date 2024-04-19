@@ -21,10 +21,14 @@ const Login = () => {
     }
     const data = await userlogin({ username, password });
 
-    if(data){
-
-      router.push("/create_board");
-    }
+  
+     console.log(data.status);
+     if(data.status === 200){
+      router.refresh();
+     }else{
+      router.push('/login');
+     }
+  
   };
   const token = useSelector((state: RootState) => state.token.token);
   if (token) {
@@ -61,7 +65,7 @@ const Login = () => {
               />
             </div>
             {/* button */}
-            <button className=" hover:bg-secondary  border-solid p-2 rounded-xl  flex items-center justify-center text-center w-[13rem] bg-[#000000] text-[#ffffff] font-bold border-2 border-black ">
+            <button className="  border-solid p-2 rounded-xl  flex items-center justify-center text-center w-[13rem] bg-[#000000] text-[#ffffff] font-bold border-2 border-black ">
               Login
             </button>
             {/* link to signup  */}

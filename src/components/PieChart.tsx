@@ -23,7 +23,7 @@ const PieChart = ({events}: any) => {
     if(events){
         for(let i=0; i < labels.length; i++){
             for(let j =0; j < events.length; j++){
-                if(labels[i] === new Date(events[j].start_date).toLocaleString('en-US',{month:'long'}) && events[j].status === "TODO"){
+                if(labels[i] === new Date(events[j].start_date).toLocaleString('en-US',{month:'long'})){
                     datamonth[i]++
                 }
             }

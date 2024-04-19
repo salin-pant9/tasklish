@@ -22,7 +22,7 @@ export const userlogin = async ({
     localStorage.setItem("user", JSON.stringify(response.data.user));
     toast("Logged in successfully");
     
-    return response?.data;
+    return response;
     
   }catch(error: any){
     toast(error.response.data.non_field_errors[0]);

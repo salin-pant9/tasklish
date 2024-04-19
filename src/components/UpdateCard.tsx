@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react'
-import {DialogTitle, Dialog, DialogContent, DialogHeader, DialogTrigger, DialogFooter } from './ui/dialog'
+import {DialogTitle, Dialog, DialogContent, DialogHeader, DialogTrigger, DialogFooter, DialogClose } from './ui/dialog'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { format } from 'date-fns'
@@ -9,26 +9,28 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { useParams } from 'next/navigation';
 
-const UpdateCard = ({data}: any) => {
+const UpdateCard = ({data, setData, item}: any) => {
 
-    const [title, setTitle] = useState(data.title);
-    const [description, setDescription] = useState(data.description);
-    const [status, setStatus] = useState(data.status);
-    const [start_date, setStart_date] = useState(format(new Date(data.start_date),'yyyy-MM-dd'))
-    const [due_date, setDue_date] = useState(format(new Date(data.due_date), 'yyyy-MM-dd'))
-    const [start_time,setStart_time] = useState(new Date(data.start_date).getHours());
-    const [end_time, setEnd_time] = useState(new Date(data.due_date).getHours());
+    const [title, setTitle] = useState(item.title);
+    const [description, setDescription] = useState(item.description);
+    const [status, setStatus] = useState(item.status);
+    const [start_date, setStart_date] = useState(format(new Date(item.start_date),'yyyy-MM-dd'))
+    const [due_date, setDue_date] = useState(format(new Date(item.due_date), 'yyyy-MM-dd'))
+    const [start_time,setStart_time] = useState(new Date(item.start_date).getHours());
+    const [end_time, setEnd_time] = useState(new Date(item.due_date).getHours());
   const token = useSelector((state: RootState) => state.token.token);
   const params = useParams();
-    // console.log(typeof(data.id))
     const update_card = async () => {
 
     let getStartDate = new Date(start_date);
     let getDueDate = new Date(due_date);
      getStartDate.setHours(start_time,0,0); 
      getDueDate.setHours(end_time,0,0);
-    const response = await update_Card({title, description, token ,board_id:params.board_id as unknown as number, id:data.id, status, start_date:getStartDate.toISOString(), due_date:getDueDate.toISOString()});
-    console.log(response);
+    const response = await update_Card({title, description, token ,board_id:params.board_id as unknown as number, id:item.id, status, start_date:getStartDate.toISOString(), due_date:getDueDate.toISOString()});
+     const getData = data.map((e:any)=> (
+        e.id === response.id ? response : e
+    ));
+    setData(getData);
     }
   return (
   <Dialog>
@@ -87,7 +89,10 @@ const UpdateCard = ({data}: any) => {
             </div>
         </div>
         <DialogFooter>
+            <DialogClose asChild>
+
             <button onClick={update_card} className='bg-blue-500 font-bold rounded-xl text-white p-2'>Update</button>
+            </DialogClose>
         </DialogFooter>
     </DialogContent>
   </Dialog>

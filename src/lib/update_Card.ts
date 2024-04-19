@@ -25,7 +25,7 @@ export const update_Card = async ({
 
 }) => {
   try{
-    console.log(id);
+    // console.log(id);
     const response = await instance.put(
       `/boards/card/update/${board_id}/${id}`,
       {

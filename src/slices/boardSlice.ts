@@ -4,6 +4,7 @@ interface boardState {
   description: string;
   id: number;
   name: string;
+  owner: string;
 }
 
 interface State {

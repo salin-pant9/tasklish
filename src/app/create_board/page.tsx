@@ -27,7 +27,7 @@ function Create_board(props: Props) {
   const payment = useSelector((state:RootState) => state.payment);
   const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(0);
   const dispatch = useDispatch();
   const handleClick = () => {
     setToggle(!toggle);
@@ -47,13 +47,14 @@ function Create_board(props: Props) {
       });
       if (response) {
         // setCount(() => response.data.length);
-        response.data.map((item: { name: any; description: any; id: any; }) => {
+        console.log(response);
+        response.data.map((item: { name: any; description:any; id: any; owner:any }) => {
           dispatch(
             AddBoards({
               name: item.name,
               description: item.description,
               id: item.id,
-            }),
+              owner:item.owner.username            }),
           );
         });
         console.log(response)
@@ -80,10 +81,11 @@ function Create_board(props: Props) {
       {/* top bar  */}
       <section className="  p-5 flex items-center justify-between w-full">
         {/* left part */}
-        <section>{token}</section>
-        <section>Count = {count}</section>
+        {/* <section>{token}</section> */}
+        {/* <section>Count = {count}</section> */}
         {/* right part */}
-        {count !== 5 || payment.status === 'Completed' ? (
+        <div></div>
+        {count !== 5 ? (
         <button
           className="rounded-xl border-2 border-solid bg-[#000000] text-[#ffffff] p-3 transition ease-in  "
           onClick={handleClick}
@@ -153,7 +155,7 @@ function Create_board(props: Props) {
 
             boards.items.map((item, index) => (
               <Link key={index} href={`/create_board/${item.id}`}>
-                <Boards name={item.name} description={item.description} />
+                <Boards name={item.name} description={item.description} owner={item.owner}  />
               </Link>
             ))
           ) 

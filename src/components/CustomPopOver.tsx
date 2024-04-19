@@ -21,7 +21,7 @@ const CustomPopOver = ({item, setData,data}: any) => {
                               >
                                 Update
                               </p> */}
-                              <UpdateCard data={item} setData={setData}/>
+                              <UpdateCard data={data} item={item} setData={setData}/>
                               {/* <p className="text-destructive hover:bg-muted">
                                 Delete
                               </p> */}

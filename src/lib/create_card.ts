@@ -43,7 +43,7 @@ export const createCard = async ({
   }
   catch(error: any){
     toast("Please fill all fields");
-    return error.message
+    console.log(error.message)
   }
 };
 
