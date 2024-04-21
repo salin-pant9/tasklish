@@ -107,7 +107,7 @@ function Create_board(props: Props) {
             <DialogContent className='sm:max-w-[500px] '>
               <DialogHeader>
                 <DialogTitle>Subscription Needed</DialogTitle>
-                <DialogDescription>Your Board Creation limit has been exceeded. Please "click" continue to Subscribe.<br/>Note: The price is Rs.500.
+                <DialogDescription>Your Board Creation limit has been exceeded. Please &quot;click&quot; continue to Subscribe.<br/>Note: The price is Rs.500.
 
                 </DialogDescription>
               </DialogHeader>
