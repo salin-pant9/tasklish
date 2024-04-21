@@ -100,12 +100,12 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
                 ))} */}
                 {data
                   .filter(
-                    (item) =>
+                    (item:any) =>
                      format(new Date(item.start_date),'yyyy-MM-dd') === individualDate &&
                       item.board === parseInt(params.board_id as string) &&
                       new Date(item.start_date).getHours() === time
                   )
-                  .map((e, index) => (
+                  .map((e:any, index:any) => (
                     <div
                       key={index}
 
@@ -149,8 +149,8 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
             // onClick={(e) => setToggle(true)}
           >
             {data
-              .filter((item) => format(new Date(item.start_date),"yyyy-MM-dd") === individualDate)
-              .map((e, index) => (
+              .filter((item:any) => format(new Date(item.start_date),"yyyy-MM-dd") === individualDate)
+              .map((e:any, index:any) => (
                 <p
                   key={index}
                   className={`${e.status === "Completed" ? "bg-[#58A399]" : 'bg-red-400'} flex space-between w-full text-[#ffffff]  rounded-xl px-2 mt-2 `}
