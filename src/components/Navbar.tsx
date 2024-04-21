@@ -29,8 +29,7 @@ function Navbar() {
   useEffect(() => {
       dispatch(addToken(token as string))
 
-    }
-  )
+    },[]);
 
     const Logout =  () => {
       logout();
