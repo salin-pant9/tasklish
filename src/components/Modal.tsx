@@ -24,10 +24,12 @@ const Modal = ({ toggle, setToggle }: Props) => {
     e.preventDefault();
     const result = await create_boards({ name, description, token });
     if (result) {
+      // console.log(result)
       dispatch(AddBoards({
         id:result.id,
         name: result.name,
-        description: result.description
+        description: result.description,
+        owner:result.ownwe?.username
       }))
       router.push(`/create_board/${result.id}`);
       console.log(result);

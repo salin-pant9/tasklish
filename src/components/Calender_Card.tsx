@@ -28,7 +28,7 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
   const token = localStorage.getItem("token");
   useEffect(() => {
     const fetchdata = async () => {
-      const response = await fetch(`http://localhost:8000/boards/cards/${params.board_id}`, {
+      const response = await fetch(`http://tasklish-host-env.eba-uama3f35.ap-southeast-2.elasticbeanstalk.com/boards/cards/${params.board_id}`, {
         headers:{
           Authorization: `Token ${token}`
         }
@@ -105,9 +105,9 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
                       item.board === parseInt(params.board_id as string) &&
                       new Date(item.start_date).getHours() === time
                   )
-                  .map((e:any, index:any) => (
+                  .map(( e:any) => (
                     <div
-                      key={index}
+                      key={e.id}
 
                       className={`group ${e.status === "Completed" ? "bg-[#58A399]" : "bg-red-500"}   h-[3rem] text-[#ffffff] w-full rounded-xl px-2 flex items-center justify-between  gap-y-1 `}
                     >
@@ -150,9 +150,9 @@ const Calender_Card = ({ days, state, range, array, times }: Props) => {
           >
             {data
               .filter((item:any) => format(new Date(item.start_date),"yyyy-MM-dd") === individualDate)
-              .map((e:any, index:any) => (
+              .map((  e:any,) => (
                 <p
-                  key={index}
+                  key={e.id}
                   className={`${e.status === "Completed" ? "bg-[#58A399]" : 'bg-red-400'} flex space-between w-full text-[#ffffff]  rounded-xl px-2 mt-2 `}
                 >
                   {e.title} ({new Date(e.start_date).getHours()}:00 - {new Date(e.due_date).getHours()}:00 )

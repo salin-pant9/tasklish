@@ -68,7 +68,7 @@ function Create_board(props: Props) {
     if(!token){
       redirect('/login')
     }
-    setLoading(true);
+    // setLoading(true);
     if (token) {
       getBoards(token);
     }

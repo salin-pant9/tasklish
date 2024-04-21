@@ -10,7 +10,6 @@ import { RootState } from '@/store';
 import { useParams } from 'next/navigation';
 
 const UpdateCard = ({data, setData, item}: any) => {
-
     const [title, setTitle] = useState(item.title);
     const [description, setDescription] = useState(item.description);
     const [status, setStatus] = useState(item.status);
