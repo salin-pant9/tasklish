@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 
-const page = () => {
+const Page = () => {
     const searchParams = useSearchParams();
     const pidx = searchParams.getAll('pidx');
     const dispatch = useDispatch();
@@ -20,14 +20,14 @@ const page = () => {
                 Authorization:'key 952aea4319784b9abe0a5cd478ebbbb6 ',
             }
         }).then(res => {
-            console.log(res);
+            // console.log(res);
             dispatch(addPayment(res.data.status));
             router.push('/')
         });
-    },[])
+    },[pidx])
   return (
     <div></div>
   )
 }
 
-export default page
+export default Page

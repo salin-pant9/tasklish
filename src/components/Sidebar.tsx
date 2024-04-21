@@ -25,10 +25,9 @@ const Sidebar = (props: Props) => {
           {/* <li>Settings</li> */}
         </ul>
         <ul className="flex flex-col p-1 justify-start gap-y-5">
-          <h3 className="text-lg font-bold">Boards</h3>
           {
             boards.items.map(board => (
-          <Link href={`/create_board/${board.id}`}>
+          <Link href={`/create_board/${board.id}`} key={board.id}>
           <li key={board.id} className="hover:bg-lightGreen hover:font-semibold hover:text-lightGray p-1 rounded-xl">
             {board.name}
           </li>

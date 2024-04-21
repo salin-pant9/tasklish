@@ -22,7 +22,7 @@ const Login = () => {
     const data = await userlogin({ username, password });
 
   
-     console.log(data.status);
+    //  console.log(data.status);
      if(data.status === 200){
       router.refresh();
      }else{

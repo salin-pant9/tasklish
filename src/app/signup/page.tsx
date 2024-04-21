@@ -30,7 +30,7 @@ const Signup = () => {
       username,
     });
     if (data) {
-      console.log(data);
+      // console.log(data);
       dispatch(
         increment({
           username: data.username,

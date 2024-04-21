@@ -25,7 +25,7 @@ const DeleteCard = (Props:any) => {
         }
       });
       if(response.status === 200){
-        console.log(Array.isArray(Props.data));
+        // console.log(Array.isArray(Props.data));
         const getData = Props.data.filter((item:any) => (
 
           item.id !== Props.item.id

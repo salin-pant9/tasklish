@@ -46,8 +46,8 @@ function Create_board(props: Props) {
         },
       });
       if (response) {
-        // setCount(() => response.data.length);
-        console.log(response);
+        // setCount(() => response.dathttp://tasklish-host-env.eba-uama3f35.ap-southeast-2.elasticbeanstalk.com/a.length);
+        // console.log(response);
         response.data.map((item: { name: any; description:any; id: any; owner:any }) => {
           dispatch(
             AddBoards({
@@ -57,11 +57,11 @@ function Create_board(props: Props) {
               owner:item.owner.username            }),
           );
         });
-        console.log(response)
+        // console.log(response)
         setLoading(false);
       }
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
   useEffect(() => {
@@ -70,11 +70,9 @@ function Create_board(props: Props) {
     }
     setLoading(true);
     if (token) {
-      console.log(payment.status);
       getBoards(token);
     }
-    console.log(boards)
-  }, [token]);
+  }, [token,getBoards]);
 
   return (
     <div className="p-6 w-full">

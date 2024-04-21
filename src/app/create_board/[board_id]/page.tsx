@@ -72,7 +72,7 @@ const Board_Name = ({}) => {
       {
         boards.items.map((item) => (
           
-          <h3 className="font-bold text-[3rem] capitalize"> {
+          <h3 className="font-bold text-[3rem] capitalize" key={item.id}> {
             item.id.toString() === params.board_id ? item.name : ''
           }</h3>
         ))
